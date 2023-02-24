@@ -6,10 +6,10 @@ services:
     restart: always
     # env_file: ./.env
     environment:
-      - MYSQL_DATABASE=mainDB
-      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=$MYSQL_DB
+      - MYSQL_ROOT_PASSWORD=$MYSQL_PASS
     ports:
-      - 3306:3306
+      - $MYSQL_PORT:$MYSQL_PORT
     volumes:
       - db-config:/etc/mysql
       - db-data:/var/lib/mysql
@@ -18,10 +18,10 @@ services:
     image: phpmyadmin:latest
     restart: always
     ports:
-      - 8090:80
+      - $PHPMYADMIN_PORT:80
     environment:
       PMA_HOST: mysqldb
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: $MYSQL_PASS
   
   server:
     build:
@@ -32,7 +32,7 @@ services:
       - ./server:/server
       - /server/node_modules
     ports:
-      - 3000:3000
+      - $SERVER_PORT:3000
     depends_on:
       - mysqldb
     stdin_open: true
