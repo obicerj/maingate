@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql
+    restart: always
+    # env_file: ./.env
+    environment:
+      - MYSQL_DATABASE=mainDB
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3306:3306
+    volumes:
+      - db-config:/etc/mysql
+      - db-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8090:80
+    environment:
+      PMA_HOST: mysqldb
+      MYSQL_ROOT_PASSWORD: password
+  
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: node-mysql-app
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysqldb
+    stdin_open: true
+    tty: true
+
+
+volumes: 
+  db-config:
+  db-data:
