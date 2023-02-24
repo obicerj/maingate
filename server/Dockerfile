@@ -2,8 +2,7 @@ FROM node:14
 
 WORKDIR /server
 
-# COPY package*.json ./
-COPY ./server/package.json ./
+COPY package*.json ./
 
 RUN npm install
 
