@@ -1,4 +1,4 @@
-# API Routes 
+# API Endpoints 
 
 ### Base URL
 ```
