@@ -28,6 +28,9 @@ services:
       context: ./server
       dockerfile: Dockerfile
     image: node-mysql-app
+    volumes:
+      - ./server:/server
+      - /server/node_modules
     ports:
       - 3000:3000
     depends_on:
