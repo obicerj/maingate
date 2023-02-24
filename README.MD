@@ -1,3 +1,14 @@
+# Maingate
+Starter template for your API consist of Node.js Express.js MySQL and PhpMyAdmin
+
+<br>
+
+## Current features
+* Register
+* Login
+
+<br>
+
 ## Build Node, PhpMyAdmin and MySQL containers
 ```
 docker-compose up
@@ -7,9 +18,8 @@ docker-compose up
 
 docker-compose up -d
 ```
-## Shutting down
+## Shut down
 ```
-
 docker-compose down
 ```
 
@@ -17,3 +27,4 @@ docker-compose down
 ```
 docker-compose down --rmi all
 ```
+
