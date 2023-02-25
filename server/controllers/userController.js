@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const { generateToken } = require('../utils/jwt');
 
 // GET ALL
 exports.getAll = async (req, res) => {
