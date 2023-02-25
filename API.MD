@@ -5,8 +5,11 @@
 localhost:3000/api/v1
 ```
 
+<br>
 
-### Register
+### AUTH
+
+#### REGISTER
 ```
 /register
 ```
@@ -18,7 +21,7 @@ localhost:3000/api/v1
 }
 ```
 
-### Login
+#### LOGIN
 ```
 /login
 ```
@@ -27,4 +30,33 @@ localhost:3000/api/v1
     "email":"user@gmail.com",
     "password":"password"
 }
+```
+
+### LOGOUT
+```
+/logout
+```
+
+<br>
+
+### USER
+
+#### GET ALL
+```
+/user
+```
+
+#### GET BY ID
+```
+/user/id
+```
+
+#### UPDATE BY ID
+```
+/user/id
+```
+
+#### DELETE BY ID
+```
+/user/id
 ```
