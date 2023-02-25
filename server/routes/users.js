@@ -1,10 +1,22 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const userController = require('../controllers/userController');
+const authenticateJWT = require('../middlewares/authenticateJWT');
 
-router.get('/user', userController.getAll);
+// GET all users (protected route)
+router.get('/user', authenticateJWT, userController.getAll);
+
+// POST 
+// router.post('/user', authenticateJWT, userController.create);
+
+// GET user by ID (unprotected route)
 router.get('/user/:id', userController.getOne);
-router.put('/user/:id', userController.updateOne);
-router.delete('/user/:id', userController.deleteOne);
+
+// PUT update user by ID (protected route)
+router.put('/user/:id', authenticateJWT, userController.updateOne);
+
+// DELETE  user by ID (protected route)
+router.delete('/user/:id', authenticateJWT, userController.deleteOne);
 
 module.exports = router;
