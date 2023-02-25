@@ -10,6 +10,7 @@ It would be great if you can contribute features to this repo.
 ## Current features
 * Register
 * Login
+* User
 
 <br>
 
@@ -31,4 +32,3 @@ docker-compose down
 ```
 docker-compose down --rmi all
 ```
-
