@@ -2,6 +2,7 @@ const { hashPassword, verifyPassword } = require('../utils/password');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
+// REGISTER
 async function signup(req, res) {
   try {
     const { fullName, email, password } = req.body;
@@ -29,7 +30,7 @@ async function signup(req, res) {
   }
 }
 
-
+// LOGIN
 async function login(req, res) {
   try {
     const { email, password } = req.body;
