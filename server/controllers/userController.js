@@ -59,7 +59,7 @@ exports.create = async (req, res) => {
       return res.status(409).json({ message: 'User with email already exists!' });
     }
 
-    const newUser = new User({ fullName, email, password: hashedPassword });
+    const newUser = new User({ fullName, email, password: hashedPassword, role: 'user' });
 
     const savedUser = await newUser.save();
     const jwtToken = jwtUtils.generateToken(savedUser)
@@ -94,18 +94,27 @@ exports.updateOne = async (req, res) => {
 
 // DELETE BY ID
 exports.deleteOne = async (req, res) => {
-  const id = req.params.id;
-
   try {
-     const deleteUser = await User.destroy({
-      where: {id: id}
-     });
+    const id = req.params.id;
+    
+    const user = await User.findOne({ where: {id} });
 
-     if(!deleteUser) {
+    if (!user) {
+      return res.status(400).json({ message: 'User not found.' })
+    }
+
+    // Check authenticated user if authorized role to delete
+    if(req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied.' });
+    }
+
+    const deleteUser = await user.destroy();
+    
+    if(!deleteUser) {
       return res.status(400).json({ message: 'Failed to delete user.' })
-     }
-
-     return res.status(200).json("User has been deleted successfully");
+    }
+    
+    return res.status(200).json({ message: 'User has been deleted successfully' });
 
   } catch (err) {
     return res.status(500).json({ message: err.message });

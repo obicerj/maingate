@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
 const userController = require('../controllers/userController');
-const authenticateJWT = require('../middlewares/authenticateJWT');
+const {authenticateJWT, authorizeRole} = require('../middlewares/authenticateJWT');
 
 // GET all users (protected route)
 router.get('/user', authenticateJWT, userController.getAll);
 
 // POST create user (protected route)
-router.post('/user', authenticateJWT, userController.create);
+// authorization (admin)
+router.post('/user', authenticateJWT, authorizeRole(['admin']), userController.create);
 
 // GET user by ID (unprotected route)
 router.get('/user/:id', userController.getOne);

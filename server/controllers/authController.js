@@ -1,12 +1,15 @@
 const { hashPassword, verifyPassword } = require('../utils/password');
 const jwtUtils = require('../utils/jwt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 // REGISTER
 async function signup(req, res) {
   try {
     const { fullName, email, password } = req.body;
+    
     const hashedPassword = await hashPassword(password);
+    
     const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
       (err) => {
         console.log('Error: ', err);
@@ -17,34 +20,22 @@ async function signup(req, res) {
       return res.status(409).json({ message: 'User with email already exists!' });
     }
 
-    const newUser = new User({ fullName, email, password: hashedPassword });
-    // const savedUser = await newUser.save().catch((err) => {
-    //   console.log('Error: ', err);
-    //   res.status(500).json({ error: 'Cannot register user at the moment!' });
-    // });
+    const newUser = new User({ fullName, email, password: hashedPassword, role: 'user' });
 
     const savedUser = await newUser.save();
+    
     const jwtToken = jwtUtils.generateToken(savedUser)
-    if(savedUser) {
-      res.status(201).send({jwtToken})
+    
+    if(!savedUser) {
+      return res.status(400).json({ message: 'Failed to create new account' });
     }
 
-    // await User.create(newUser, (err, data) => {
-    //   if(err) {
-    //     res.status(500).send({
-    //       message: err.message || 'Failed creating new user account'
-    //     });
-    //   } else {
-    //     const jwtToken = jwtUtils.generateToken(data);
-    //     res.status(201).send({ jwtToken })
-    //   }
-    // })
+    return res.status(201).send({ message: 'User account created. Thanks for registering', token: jwtToken })
 
-    // if (savedUser) res.status(201).json({ message: 'User account created. Thanks for registering' });
-    
   } catch(err) {
-    console.log(err);
+
     return res.status(500).json({ message: `Something went wrong, ${err.message}` });
+
   }
 }
 
@@ -69,22 +60,41 @@ async function login(req, res) {
 
     if (!isPasswordValid) throw new Error('Invalid password');
 
-    // const jwtToken = jwt.sign(
-    //   { id: user.id, email: user.email },
-    //   process.env.JWT_KEY
-    // );
-
     const jwtToken = jwtUtils.generateToken(user);
 
     res.status(200).json({ message: 'Welcome Back!', token: jwtToken });
+  
   } catch(err) {
-    console.log(err)
+
     return res.status(401).json({ message: 'Invalid credentials' });
+
   }
 
 }
 
+function logout(req, res) {
+  // Invalidate JWT token using expiration
+  const jwtToken = req.headers.authorization.split(' ')[1];
+  
+  jwt.verify(jwtToken, process.env.JWT_SECRET, (err, decoded) => {
+  
+    if (err) {
+  
+      return res.status(401).json({ message: 'Invalid token' });
+  
+    }
+  
+    const { id } = decoded;
+  
+    const expiredToken = jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1s' });
+  
+    res.status(200).json({ message: 'Logged out successfully', token: expiredToken });
+  
+  });
+}
+
 module.exports = {
   signup,
-  login
+  login,
+  logout
 }
