@@ -1,5 +1,4 @@
 const { hashPassword, verifyPassword } = require('../utils/password');
-const jwt = require('jsonwebtoken');
 const jwtUtils = require('../utils/jwt');
 const User = require('../models/user');
 
