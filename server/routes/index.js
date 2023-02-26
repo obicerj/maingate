@@ -3,6 +3,7 @@ const passport = require('passport');
 const registerApi = require('./register');
 const loginApi = require('./login');
 const userApi = require('./users');
+const logoutApi = require('./logout');
 const authenticateJWT = require('../middlewares/authenticateJWT');
 
 const router = express.Router();
@@ -12,8 +13,6 @@ router.use(loginApi);
 
 router.use(userApi);
 
-router.post('/logout', authenticateJWT, (req, res) => {
-  res.json({ message: 'User logged out successfully' });
-});
+router.use(logoutApi);
 
 module.exports = router;
