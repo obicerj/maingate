@@ -17,6 +17,6 @@ router.get('/user/:id', userController.getOne);
 router.put('/user/:id', authenticateJWT, userController.updateOne);
 
 // DELETE  user by ID (protected route)
-router.delete('/user/:id', authenticateJWT, userController.deleteOne);
+router.delete('/user/:id', authenticateJWT, authorizeRole(['admin']), userController.deleteOne);
 
 module.exports = router;

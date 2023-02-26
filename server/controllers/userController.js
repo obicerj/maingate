@@ -103,11 +103,6 @@ exports.deleteOne = async (req, res) => {
       return res.status(400).json({ message: 'User not found.' })
     }
 
-    // Check authenticated user if authorized role to delete
-    if(req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'Access denied.' });
-    }
-
     const deleteUser = await user.destroy();
     
     if(!deleteUser) {
