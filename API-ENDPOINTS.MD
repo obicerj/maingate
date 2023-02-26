@@ -41,22 +41,26 @@ localhost:3000/api/v1
 
 ### USER
 
-#### GET ALL
+#### GET all user
+```
+/user
+```
+#### POST create user
 ```
 /user
 ```
 
-#### GET BY ID
+#### GET by ID
 ```
 /user/id
 ```
 
-#### UPDATE BY ID
+#### PUT update by ID
 ```
 /user/id
 ```
 
-#### DELETE BY ID
+#### DELETE by ID
 ```
 /user/id
 ```
