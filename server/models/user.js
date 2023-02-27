@@ -1,7 +1,14 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/db');
+const Role = require('./role');
 
 const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false
+  },
   fullName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -14,11 +21,28 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  role: {
-    type: DataTypes.STRING,
+  roleId: {
+    type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 'user'
+    references: {
+      model: Role,
+      key: 'id',
+    },
+    // type: DataTypes.STRING,
+    // allowNull: false,
+    // get() {
+    //   return JSON.parse(this.getDataValue('roleId'));
+    // },
+    // set(val) {
+    //   this.setDataValue('roleId', JSON.stringify(val));
+    // }
   }
 });
+
+// User.belongsToMany(Role, { through: 'UserRole', foreignKey: 'userId' });
+// Role.belongsToMany(User, { through: 'UserRole', foreignKey: 'roleId' });
+User.belongsTo(Role, { foreignKey: 'roleId' });
+Role.hasMany(User, { foreignKey: 'roleId' });
+
 
 module.exports = User;

@@ -2,14 +2,14 @@ const { hashPassword, verifyPassword } = require('../utils/password');
 const jwtUtils = require('../utils/jwt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Role = require('../models/role');
 
 // REGISTER
 async function signup(req, res) {
   try {
     const { fullName, email, password } = req.body;
     
-    const hashedPassword = await hashPassword(password);
-    
+    // Check if user already exists
     const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
       (err) => {
         console.log('Error: ', err);
@@ -20,7 +20,13 @@ async function signup(req, res) {
       return res.status(409).json({ message: 'User with email already exists!' });
     }
 
-    const newUser = new User({ fullName, email, password: hashedPassword, role: 'user' });
+    // Hash password input
+    const hashedPassword = await hashPassword(password);
+
+    const newUser = new User({ fullName, email, password: hashedPassword, roleId: 2 });
+
+    // const assignedRoles = await Role.findAll({ where: { name: 'user' } });
+    // await newUser.addRoles(assignedRoles);
 
     const savedUser = await newUser.save();
     

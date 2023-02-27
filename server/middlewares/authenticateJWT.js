@@ -1,5 +1,6 @@
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
+const Role = require('../models/role');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const User = require('../models/user');
@@ -44,16 +45,15 @@ const authenticateJWT = (req, res, next) => {
   })(req, res, next);
 };
 
-const authorizeRole = (roles = []) => (req, res, next) => {
+// const authorizeRole = (roles = []) => (req, res, next) => {
 
-  if (roles.length && !roles.includes(req.user.role)) {
-    return res.status(403).json({ message: 'Forbidden.' });
-  }
+//   if (roles.length && !roles.includes(req.user.role)) {
+//     return res.status(403).json({ message: 'Forbidden.' });
+//   }
 
-  next();
-}
+//   next();
+// }
 
 module.exports = {
-  authenticateJWT,
-  authorizeRole
+  authenticateJWT
 };
