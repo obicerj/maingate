@@ -17,7 +17,8 @@ localhost:3000/api/v1
 {
     "fullName":"User Test",
     "email":"user@gmail.com",
-    "password":"password"
+    "password":"password",
+    "roleId": 2
 }
 ```
 
