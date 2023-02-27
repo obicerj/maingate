@@ -11,6 +11,8 @@ It would be great if you can contribute features to this repo.
 * Register
 * Login
 * User
+* User roles
+* Protected routes
 
 <br>
 
