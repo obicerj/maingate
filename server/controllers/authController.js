@@ -7,7 +7,7 @@ const Role = require('../models/role');
 // REGISTER
 async function signup(req, res) {
   try {
-    const { fullName, email, password } = req.body;
+    const { fullName, email, password, roleId } = req.body;
     
     // Check if user already exists
     const alreadyExistsUser = await User.findOne({ where: { email } }).catch(
@@ -23,7 +23,7 @@ async function signup(req, res) {
     // Hash password input
     const hashedPassword = await hashPassword(password);
 
-    const newUser = new User({ fullName, email, password: hashedPassword, roleId: 2 });
+    const newUser = new User({ fullName, email, password: hashedPassword, roleId });
 
     // const assignedRoles = await Role.findAll({ where: { name: 'user' } });
     // await newUser.addRoles(assignedRoles);
