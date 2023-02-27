@@ -4,9 +4,16 @@ const helmet = require('helmet');
 const cors = require('cors');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+
 require('dotenv').config();
 require('./middlewares/passport');
+
 require('./models/user');
+require('./models/role');
+// disabled
+// require('./models/userRole');
+
+require('./migrations/seeder');
 
 const middlewares = require('./middlewares/errorHandler');
 const api = require('./routes');
