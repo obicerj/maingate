@@ -20,23 +20,6 @@ const checkRole = (authRoles) => {
       res.status(500).json({ message: `Server Error ${err.message}` });
     }
   };
-  // return async (req, res, next) => {
-  //   const user = req.user;
-  //   // const userRoles = user.Roles.map(role => role.name);
-  //   // const hasRequiredRole = roles.some(role => userRoles.include(role));
-
-  //   console.log(user.Role);
-
-  //   if (!user || user.Role.name !== role) {
-  //     return res.status(403).json({ message: 'Forbidden' });
-  //   }
-
-  //   if (!user || !hasRequiredRole) {
-  //     return res.status(403).json({ message: 'Forbidden' });
-  //   }
-
-  //   next();
-  // };
 };
 
 module.exports = { checkRole };

@@ -28,19 +28,9 @@ const User = sequelize.define('User', {
       model: Role,
       key: 'id',
     },
-    // type: DataTypes.STRING,
-    // allowNull: false,
-    // get() {
-    //   return JSON.parse(this.getDataValue('roleId'));
-    // },
-    // set(val) {
-    //   this.setDataValue('roleId', JSON.stringify(val));
-    // }
   }
 });
 
-// User.belongsToMany(Role, { through: 'UserRole', foreignKey: 'userId' });
-// Role.belongsToMany(User, { through: 'UserRole', foreignKey: 'roleId' });
 User.belongsTo(Role, { foreignKey: 'roleId' });
 Role.hasMany(User, { foreignKey: 'roleId' });
 

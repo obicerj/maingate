@@ -2,7 +2,6 @@ const { hashPassword, verifyPassword } = require('../utils/password');
 const jwtUtils = require('../utils/jwt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const Role = require('../models/role');
 
 // REGISTER
 async function signup(req, res) {
@@ -24,9 +23,6 @@ async function signup(req, res) {
     const hashedPassword = await hashPassword(password);
 
     const newUser = new User({ fullName, email, password: hashedPassword, roleId });
-
-    // const assignedRoles = await Role.findAll({ where: { name: 'user' } });
-    // await newUser.addRoles(assignedRoles);
 
     const savedUser = await newUser.save();
     

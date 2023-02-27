@@ -64,7 +64,6 @@ exports.getOne = async (req, res) => {
   try {
     const user = await User.findByPk(id, {
       attributes: { exclude: ['password']},
-      // include: [{ model: Role, through: { attributes: [] } }],
     });
     
     if(!user) {

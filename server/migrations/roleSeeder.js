@@ -21,10 +21,3 @@ const sequelize = require('../utils/db');
   }
  
 module.exports = { seed };
-
-// sequelize.sync().then(async () => {
-//   for (const role of roles) {
-//     await Role.findOrCreate({ where: { name: role.name }, defaults: role });
-//   }
-//   console.log('Roles seeded');
-// });
