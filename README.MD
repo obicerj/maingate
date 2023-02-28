@@ -3,8 +3,6 @@ Starter template for your API server consist of Node.js Express.js MySQL and Php
 
 The main goal of this project is to help beginners who are learning frontend have their own basic backend API.
 
-It would be great if you can contribute features to this repo.
-
 <br>
 
 ## Current features
