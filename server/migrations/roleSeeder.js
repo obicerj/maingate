@@ -1,5 +1,5 @@
 const Role = require('../models/role');
-const sequelize = require('../utils/db');
+const sequelize = require('../config/db');
 
 
   async function seed() {

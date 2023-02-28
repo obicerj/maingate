@@ -1,4 +1,4 @@
-const sequelize = require('../utils/db');
+const sequelize = require('../config/db');
 const userSeed = require('./userSeeder');
 const roleSeed = require('./roleSeeder');
 // const userRoleSeed = require('./userRoleSeeder');
