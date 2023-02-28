@@ -20,19 +20,17 @@ const api = require('./routes');
 
 const app = express();
 
-app.use(cors());
+var corsOptions = {
+  origin: process.env.URL
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.json({
-    message: '🦄🌎🌍🌏✨🦄',
-  });
-});
 
 app.use('/api/v1', api);
 
